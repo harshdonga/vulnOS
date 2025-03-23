@@ -14,4 +14,7 @@ vuln_kernel.bin: linker.ld $(objects)
 		i686-linux-gnu-ld $(LDPARAMS) -T $< -o $@ $(objects)
 
 install: vuln_kernel.bin
-		sudo cp $< /boot/vuln_kernel.bin
+		sudo mv $< ./kernel/vuln_kernel.bin
+
+clean:
+	rm -f *.o ./kernel/*.bin
