@@ -9,10 +9,14 @@
 
 .section .text
 .extern vuln_kernel
+.extern call_constructors
 .global loader
 
 loader:
     mov $kernel_stack, %esp
+
+    call call_constructors
+
     push %eax
     push %ebx
     call vuln_kernel
