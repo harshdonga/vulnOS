@@ -1,5 +1,8 @@
+#include "types.h"
+#include "gdt.h"
+
 void printf(char* str) {
-    unsigned short* video_memory = (unsigned short*)0xb8000;
+    static uint16_t* video_memory = (uint16_t*)0xb8000;
 
     for(int i = 0; str[i] != '\0'; ++i){
         video_memory[i] = (video_memory[i] & 0xFF00) | str[i];
@@ -16,8 +19,10 @@ extern "C" void call_constructors() {
 }
 
 
-extern "C" void vuln_kernel(void* multiboot_structure, unsigned int magic_number) {
+extern "C" void vuln_kernel(void* multiboot_structure, uint32_t magic_number) {
     printf("Hi from VulnOS, this is just can of worms!");
+
+    GlobalDescriptorTable gdt;
 
     while(1);
 }
